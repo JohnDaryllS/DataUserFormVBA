@@ -1,0 +1,68 @@
+Dim attempt As Integer
+
+
+Private Sub cmdexit_Click()
+Dim iexit As VbMsgBoxResult
+
+iexit = MsgBox("Do you want to exit?", vbQuestion + vbYesNo, "Registration Form")
+
+If iexit = vbYes Then
+Unload Me
+
+End If
+
+
+End Sub
+
+Private Sub cmdlogin_Click()
+
+If txtusername.Text = "admin" And txtpassword.Text = "admin" Then
+
+Userform1.Hide
+UserForm2.Show
+
+Else
+
+txtusername.Text = ""
+txtpassword.PasswordChar = ""
+txtusername.SetFocus
+
+attempt = attempt + 1
+MsgBox ("Invalid Login, Attempt is: " & attempt)
+If attempt = 3 Then
+
+Unload Me
+
+End If
+End If
+
+End Sub
+
+Private Sub cmdreset_Click()
+txtusername.Text = ""
+txtpassword.Text = ""
+End Sub
+
+
+
+Private Sub Label1_Click()
+
+End Sub
+
+Private Sub txtpassword_Change()
+
+End Sub
+
+Private Sub txtusername_Change()
+
+End Sub
+
+Private Sub UserForm_Click()
+
+End Sub
+
+Private Sub UserForm_Initialize()
+Image1.Picture = LoadPicture("C:\Users\user\Downloads\news.jpg")
+txtpassword.PasswordChar = "*"
+attemp = 0
+End Sub

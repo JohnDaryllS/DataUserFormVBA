@@ -1,0 +1,132 @@
+Private Sub cmdadd_Click()
+Dim wks As Worksheet
+Dim add As Range
+Set wks = Sheet1
+Set add = wks.Range("A65356").End(xlUp).Offset(1, 0)
+
+add.Offset(0, 0).Value = txtref.Text
+add.Offset(0, 1).Value = txtfname.Text
+add.Offset(0, 2).Value = txtlname.Text
+add.Offset(0, 3).Value = txtage.Text
+add.Offset(0, 4).Value = txtadd.Text
+add.Offset(0, 5).Value = txtzip.Text
+add.Offset(0, 6).Value = txttel.Text
+add.Offset(0, 7).Value = cmbid.Text
+add.Offset(0, 8).Value = cmbmem.Text
+add.Offset(0, 9).Value = cmbfee.Text
+End Sub
+
+Private Sub cmddelete_Click()
+
+Dim i As Integer
+For i = 0 To Range("A65356").End(xlUp).Row - 1
+If ListBox1.Selected(i) Then
+Rows(i + 1).Select
+Selection.Delete
+End If
+
+Next i
+
+End Sub
+
+Private Sub cmdexit_Click()
+Dim iexit As VbMsgBoxResult
+
+iexit = MsgBox("Do you want to exit?", vbQuestion + vbYesNo, "Data Entry Form")
+
+If iexit = vbYes Then
+Unload Me
+
+End If
+
+End Sub
+
+Private Sub cmdprint_Click()
+Application.Dialogs(xlDialogPrinterSetup).Show
+ThisWorkbook.Sheets("Sheet1").PrintOut copies:=1
+
+End Sub
+
+Private Sub cmdreset_Click()
+txtref.Text = ""
+txtfname.Text = ""
+txtlname.Text = ""
+txtage.Text = ""
+txtadd.Text = ""
+txtzip.Text = ""
+txttel.Text = ""
+cmbid.Text = ""
+cmbmem.Text = ""
+cmbfee.Text = ""
+
+End Sub
+
+Private Sub cmdsearch_Click()
+Dim isearch As Long
+Dim i As Long
+
+isearch = Worksheets("sheet1").Range("A1").CurrentRegion.Rows.Count
+
+For i = 1 To isearch
+
+If Trim(Sheet1.Cells(i, 1)) <> Trim(txtsearch.Text) And i = isearch Then
+MsgBox ("Invalid Data")
+txtsearch.Text = ""
+txtsearch.SetFocus
+
+End If
+
+If Trim(Sheet1.Cells(i, 1)) = Trim(txtsearch.Text) Then
+txtref.Text = Sheet1.Cells(i, 1)
+txtfname.Text = Sheet1.Cells(i, 2)
+txtlname.Text = Sheet1.Cells(i, 3)
+txtage.Text = Sheet1.Cells(i, 4)
+txtadd.Text = Sheet1.Cells(i, 5)
+txtzip.Text = Sheet1.Cells(i, 6)
+txttel.Text = Sheet1.Cells(i, 7)
+cmbid.Text = Sheet1.Cells(i, 8)
+cmbmem.Text = Sheet1.Cells(i, 9)
+cmbfee.Text = Sheet1.Cells(i, 10)
+
+Exit For
+
+End If
+
+Next i
+
+End Sub
+
+
+
+Private Sub UserForm_Initialize()
+ListBox1.ColumnCount = 10
+ListBox1.RowSource = "A1:J65356"
+
+cmbid.AddItem ("")
+cmbid.AddItem ("Student ID")
+cmbid.AddItem ("Employee ID")
+cmbid.AddItem ("Government ID")
+cmbid.AddItem ("Drivers License")
+cmbid.AddItem ("Philippine National ID")
+cmbid.AddItem ("Passport ID")
+cmbid.AddItem ("Voter's ID")
+cmbid.AddItem ("TIN Card")
+cmbid.AddItem ("Postal ID")
+cmbid.AddItem ("Senior Citizen ID")
+cmbid.AddItem ("SSS UMID Card")
+cmbid.AddItem ("PWD ID")
+cmbid.AddItem ("Philhealth ID")
+cmbid.AddItem ("GSIS e-card")
+cmbid.AddItem ("PRC ID")
+
+cmbmem.AddItem ("Annual")
+cmbmem.AddItem ("Quarterly")
+cmbmem.AddItem ("Monthly")
+cmbmem.AddItem ("Weekly")
+
+cmbfee.AddItem ("5000")
+cmbfee.AddItem ("1000")
+cmbfee.AddItem ("500")
+cmbfee.AddItem ("50")
+
+End Sub
